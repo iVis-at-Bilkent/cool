@@ -416,7 +416,7 @@ $("body").on("change", "#file-input", function (e) {
             else if (isSBGNML)
                 url = "http://localhost:" + port + "/layout/sbgnml?edges=true"
             else
-                url = "http://localhost:" + port + "/layout/json?edges=true"
+                url = "http://localhost:" + 5400 + "/layout/json?edges=true"
         }
         else {
             if (isGraphML)
@@ -567,7 +567,7 @@ var loadSample = function (fileName) {
         else if (isSBGNML)
             url = "http://localhost:" + port + "/layout/sbgnml?edges=true"
         else
-            url = "http://localhost:" + 4400 + "/layout/json?edges=true"
+            url = "http://localhost:" + 5400 + "/layout/json?edges=true"
     }
     else {
         if (isGraphML)
