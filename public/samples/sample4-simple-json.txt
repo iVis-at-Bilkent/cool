@@ -1,0 +1,190 @@
+[
+    {
+        "group": "nodes",
+        "data": {
+            "id": "n0"
+        },
+        "position": {
+            "x": 44.04117227585641,
+            "y": 173.20056449713445
+        }
+    },
+    {
+        "group": "nodes",
+        "data": {
+            "id": "n1"
+        },
+        "position": {
+            "x": 113.21379366825988,
+            "y": 113.1310958229268
+        }
+    },
+    {
+        "group": "nodes",
+        "data": {
+            "id": "n2"
+        },
+        "position": {
+            "x": 183.53275276273519,
+            "y": 182.04765804025033
+        }
+    },
+    {
+        "group": "nodes",
+        "data": {
+            "id": "n3"
+        },
+        "position": {
+            "x": 176.537504054946,
+            "y": 45.33730991165305
+        }
+    },
+    {
+        "group": "nodes",
+        "data": {
+            "id": "n4"
+        },
+        "position": {
+            "x": 269.43225453686125,
+            "y": 198.26955278495723
+        }
+    },
+    {
+        "group": "nodes",
+        "data": {
+            "id": "n5"
+        },
+        "position": {
+            "x": 245.4354059020162,
+            "y": 113.71167835793881
+        }
+    },
+    {
+        "group": "nodes",
+        "data": {
+            "id": "n6"
+        },
+        "position": {
+            "x": 258.6774759046476,
+            "y": 30
+        }
+    },
+    {
+        "group": "nodes",
+        "data": {
+            "id": "n7"
+        },
+        "position": {
+            "x": 30,
+            "y": 87.16143328467149
+        }
+    },
+    {
+        "group": "nodes",
+        "data": {
+            "id": "n8"
+        },
+        "position": {
+            "x": 353.75598788828313,
+            "y": 227.44715327226504
+        }
+    },
+    {
+        "group": "nodes",
+        "data": {
+            "id": "n9"
+        },
+        "position": {
+            "x": 343.33569803146804,
+            "y": 145.75025193786166
+        }
+    },
+    {
+        "group": "edges",
+        "data": {
+            "source": "n0",
+            "target": "n1",
+            "id": "e0"
+        }
+    },
+    {
+        "group": "edges",
+        "data": {
+            "source": "n1",
+            "target": "n2",
+            "id": "e1"
+        }
+    },
+    {
+        "group": "edges",
+        "data": {
+            "source": "n1",
+            "target": "n3",
+            "id": "e2"
+        }
+    },
+    {
+        "group": "edges",
+        "data": {
+            "source": "n1",
+            "target": "n7",
+            "id": "e3"
+        }
+    },
+    {
+        "group": "edges",
+        "data": {
+            "source": "n2",
+            "target": "n4",
+            "id": "e4"
+        }
+    },
+    {
+        "group": "edges",
+        "data": {
+            "source": "n2",
+            "target": "n5",
+            "id": "e5"
+        }
+    },
+    {
+        "group": "edges",
+        "data": {
+            "source": "n4",
+            "target": "n5",
+            "id": "e6"
+        }
+    },
+    {
+        "group": "edges",
+        "data": {
+            "source": "n5",
+            "target": "n6",
+            "id": "e7"
+        }
+    },
+    {
+        "group": "edges",
+        "data": {
+            "source": "n3",
+            "target": "n5",
+            "id": "e8"
+        }
+    },
+    {
+        "group": "edges",
+        "data": {
+            "source": "n4",
+            "target": "n8",
+            "id": "e9"
+        }
+    },
+    {
+        "group": "edges",
+        "data": {
+            "source": "n4",
+            "target": "n9",
+            "id": "e10"           
+        }
+    }
+]

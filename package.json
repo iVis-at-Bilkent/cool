@@ -1,0 +1,41 @@
+{
+  "name": "cytoscape-web-service-final",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "env-cmd -f ./config/dev.env nodemon src/app.js -e html,js,css,txt",
+    "debug": "node --inspect-brk src/app.js",
+    "test": "env-cmd -f ./config/dev.env jest --watch",
+    "start": "node src/app.js"
+  },
+  "jest": {
+    "testEnvironment": "node"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "cytoscape": "^3.8.0",
+    "cytoscape-avsdf": "*",
+    "cytoscape-cise": "*",
+    "cytoscape-cola": "*",
+    "cytoscape-cose-bilkent": "^4.0.0",
+    "cytoscape-dagre": "^2.2.2",
+    "cytoscape-euler": "^1.2.1",
+    "cytoscape-fcose": "*",
+    "cytoscape-graphml": "^1.0.6",
+    "cytoscape-klay": "^3.1.2",
+    "debug": "^2.6.9",
+    "express": "^4.21.2",
+    "jquery": "^3.4.1",
+    "jsdom": "^15.1.1",
+    "nodemon": "^1.19.1",
+    "sbgnml-to-cytoscape": "^4.0.4"
+  },
+  "devDependencies": {
+    "env-cmd": "^9.0.3",
+    "jest": "^24.9.0",
+    "supertest": "^4.0.2"
+  }
+}

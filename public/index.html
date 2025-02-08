@@ -1,0 +1,1600 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<link rel="shortcut icon" href="#" />
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Cytoscape.js Layout Demo</title>
+
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/jquery-ui.min.css">
+    <link rel="stylesheet" href="css/jquery-ui.structure.min.css">
+    <link rel="stylesheet" href="css/jquery-ui.theme.min.css">
+    <link rel="stylesheet" href="css/cytoscape.js-panzoom.css">
+    <link href="css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="css/bootstrap-colorpicker.min.css">
+    <link href="css/my-style.css" rel="stylesheet">
+</head>
+
+<body>
+    <nav id="myNavbar" class="navbar navbar-default my-nav-bar" role="navigation">
+
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="container">
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <ul class="nav navbar-nav">
+
+                <li class="dropdown">
+
+                    <a href="#" data-toggle="dropdown" class="dropdown-toggle">File <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li><a id="new" href="#">New</a> </li>
+                        <li><input id="file-input" type="file" style="display:none" />
+                            <a href="#" type="file" id="load-file">Load...</a></li>
+
+                        <li><a id="save-file-json" href="#">Save</a></li>
+
+
+                        <li class="dropdown">
+                            <a href="#" data-toggle="dropdown" class="dropdown-toggle">Samples
+                                <b class="right-caret"></b>
+                            </a>
+                            <ul class="dropdown-menu">
+
+                                <li><a id="sample0" href="#">Sample1-simple-json</a></li>
+                                <li><a id="sample1" href="#">Sample2-simple-json</a></li>
+                                <li><a id="sample2" href="#">Sample3-simple-json</a></li>
+                                <li><a id="sample3" href="#">Sample4-simple-json</a></li>
+                                <li><a id="sample4" href="#">Sample5-big-tree-json</a></li>
+                                <li><a id="sample5" href="#">Sample6-big-graph-graphml</a></li>
+                                <li><a id="sample6" href="#">Sample7-simple-sbgnml</a></li>
+                                <li><a id="sample7" href="#">Sample8-compound-sbgnml</a></li>
+                                <li><a id="sample8" href="#">Sample9-compound-sbgnml</a></li>
+                                <li><a id="sample9" href="#">Sample10-clustered-graphml</a></li>
+                                <li><a id="sample10" href="#">Sample11-clustered-graphml</a></li>
+                                <li><a id="sample11" href="#">Sample12-clustered-json</a></li>
+                                <li><a id="sample12" href="#">Sample13-compound-json</a></li>
+                                <li><a id="sample13" href="#">Sample14-compound-json</a></li>
+                                <li><a id="sample14" href="#">Sample15-compound-json</a></li>
+                                <li><a id="sample15" href="#">Sample16-compound-json</a></li>
+                                <li><a id="sample16" href="#">Sample17-non-uniform-dimensions-json</a></li>
+                                <li><a id="sample17" href="#">Sample18-huge-graph-graphml</a></li>
+
+                            </ul>
+                        </li>
+
+                        <li class="divider"></li>
+
+                        <li><a id="save-as-png" href="#">Save as PNG</a></li>
+
+
+                    </ul>
+
+
+
+
+                <li class="dropdown">
+                    <a href="#" data-toggle="dropdown" class="dropdown-toggle">Edit <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li><a id="addNodeMenu" href="#">Add Node...</a></li>
+                        <li><a id="makeCompound" href="#">Add Compound For Selected</a></li>
+                        <li><a id="addEdge" href="#">Add Edge Between Selected</a></li>
+                        <li class="divider"></li>
+                        <li><a id="delete" href="#">Delete Selected <i class="shortcut"> (DEL)</i> </a></li>
+                        <li class="divider"></li>
+                        <li class="disabled"><a id="undo" href="#">Undo <i class="shortcut"> (CTRL + Z)</i> </a></li>
+                        <li class="disabled"><a id="redo" href="#">Redo <i class="shortcut"> (CTRL + Y)</i> </a></li>
+                    </ul>
+                </li>
+
+                <li class="dropdown">
+                    <a href="#" data-toggle="dropdown" class="dropdown-toggle">Layout <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li class="dropdown">
+                            <a href="#" data-toggle="dropdown" class="dropdown-toggle">Style
+                                <b class="right-caret"></b>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a id="cose-bilkent" href="#">cool</a></li>
+                            </ul>
+                        </li>
+                        <li class="divider"></li>
+                        <li><a id="perform-layout" href="#">Perform Layout</a></li>
+                        <li><a id="layout-properties" href="#">Layout Properties...</a></li>
+                    </ul>
+                </li>
+
+                <li class="dropdown">
+                    <a href="#" data-toggle="dropdown" class="dropdown-toggle">Help <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+
+                        <li class="dropdown">
+                            <a href="#" data-toggle="modal" data-target="#quick-help-template">
+                                Quick Help
+                            </a>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" data-toggle="modal" data-target="#about-template">
+                                About
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+
+            </ul>
+        </div><!-- /.navbar-collapse -->
+    </nav>
+
+    <div id="info-content">
+        <table width="100%" height="100%" align="center" valign="center">
+            <tr>
+                <td>
+                    <span class="input-file" id="file-name"></span>
+                </td>
+                <td>
+                    <span class="label">Cytoscape.js<i> Layout Service Demo</i></span>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <div id="cy"></div>
+
+    <div id="about-template" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title">About</h4>
+                </div>
+                <div class="modal-body" align="center">
+                    <p><span style="font-weight: bold; text-align: center">Cytoscape.js Layout Service Demo 1.0</span>
+                    </p>
+                    <span>i-Vis Information Visualization Lab<br>Bilkent University, Ankara,
+                        Turkey</span>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">OK</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+    <div id="quick-help-template" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title">Quick Help</h4>
+                </div>
+                <div class="modal-body">
+                    <p><span style="font-weight: bold">File | Load...:</span> Load a graph in GraphML, JSON, SBGN-ML
+                    </p>
+                    <p><span style="font-weight: bold">File | Save :</span> Save the current graph in GraphML</p>
+                    <p><span style="font-weight: bold">Add Node...:</span> Add a simple node</p>
+                    <p><span style="font-weight: bold">Add Compound For Selected:</span> Add a new compound containing
+                        selected nodes</p>
+                    <p><span style="font-weight: bold">Add Edge Between Selected:</span> Add an edge between two
+                        selected nodes</p>
+                    <p><span style="font-weight: bold">Delete Selected:</span> Delete selected nodes and edges</p>
+                    <p><span style="font-weight: bold">Layout | Style | ...:</span> Change layout style</p>
+                    <p><span style="font-weight: bold">Layout | Perform Layout:</span> Apply the current layout style to
+                        the current graph</p>
+                    <p><span style="font-weight: bold">Layout | Layout Properties...: </span> Change layout options for
+                        the current layout style</p>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">OK</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+    <div class="modal fade" id="add-node-modal" tabindex="-1" role="dialog" aria-labelledby="add-node-modal-label">
+        <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="add-node-modal-label">Add new node</h4>
+                </div>
+                <div class="modal-body">
+                    <!-- <div class="form-group">
+                        <label for="new-node-name">Name</label>
+                        <input type="text" class="form-control" id="new-node-name" placeholder="Name" value=" ">
+                    </div> -->
+                    <div class="form-group">
+                        <label for="new-node-width">Width</label>
+                        <input type="number" class="form-control" min="0" value="15" id="new-node-width"
+                            placeholder="Width">
+                    </div>
+                    <div class="form-group">
+                        <label for="new-node-height">Height</label>
+                        <input type="number" class="form-control" min="0" value="15" id="new-node-height"
+                            placeholder="Height">
+                    </div>
+                    <!-- <div class="form-group">
+                        <label for="new-node-shape">Shape</label>
+                        <select id="new-node-shape" class="form-control">
+                            <option value="rectangle">Rectangle</option>
+                            <option value="triangle">Triangle</option>
+                            <option value="ellipse">Ellipse</option>
+                            <option value="roundrectangle">Round Rectangle</option>
+                            <option value="pentagon">Pentagon</option>
+                        </select>
+                    </div> -->
+                    <!-- <div class="form-group">
+                        <label for="new-node-color">Color</label>
+                        <div id="new-node-color" class="input-group colorpicker-component">
+                            <input type="text" value="gray" class="form-control" />
+                            <span class="input-group-addon"><i></i></span>
+                        </div>
+                    </div> -->
+                    <!-- <div class="form-group">
+                        <label for="new-node-border-color">Border Color</label>
+
+                        <div id="new-node-border-color" class="input-group colorpicker-component">
+                            <input type="text" value="cyan" class="form-control" />
+                            <span class="input-group-addon"><i></i></span>
+                        </div>
+                    </div> -->
+                    <!--
+                <div class="form-group">
+                    <label for="new-node-x">X Position</label>
+                    <input type="number" class="form-control" id="new-node-x" placeholder="X Position">
+                </div>
+                <div class="form-group">
+                    <label for="new-node-y">Y Position</label>
+                    <input type="number" class="form-control" id="new-node-y" placeholder="Y Position">
+                </div>
+            </div>-->
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal"
+                            id="exit-new-node">Close</button>
+                        <button type="button" class="btn btn-primary" data-dismiss="modal" id="save-new-node">Save
+                            changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="cose-bilkent-layout-table" title="CoSE-Bilkent Properties" style="display: inline;resize: none;">
+            <!-- sbgn layout table will be shown here -->
+        </div>
+        <div id="cose-layout-table" title="CoSE Properties" style="display: inline;resize: none;">
+            <!-- sbgn layout table will be shown here -->
+        </div>
+        <div id="cola-layout-table" title="Cola Properties" style="display: inline;resize: none;">
+            <!-- sbgn layout table will be shown here -->
+        </div>
+        <!-- newly added -->
+        <div id="fcose-layout-table" title="Fcose Properties" style="display: inline;resize: none;">
+            <!-- sbgn layout table will be shown here -->
+        </div>
+        <div id="cise-layout-table" title="Cise Properties" style="display: inline;resize: none;">
+            <!-- sbgn layout table will be shown here -->
+        </div>
+        <div id="dagre-layout-table" title="dagre Properties" style="display: inline;resize: none;">
+            <!-- sbgn layout table will be shown here -->
+        </div>
+        <div id="klay-layout-table" title="Klay Properties" style="display: inline;resize: none;">
+            <!-- sbgn layout table will be shown here -->
+        </div>
+        <div id="avsdf-layout-table" title="Avsdf Properties" style="display: inline;resize: none;">
+            <!-- sbgn layout table will be shown here -->
+        </div>
+        <div id="euler-layout-table" title="Euler Properties" style="display: inline;resize: none;">
+            <!-- sbgn layout table will be shown here -->
+        </div>
+
+
+        <script type="text/template" id="cose-bilkent-settings-template">
+    <table class="table-condensed layout-table">
+        <tr>
+            <td>
+                <span class="add-on layout-text"> Vertical Spacing </span>
+            </td>
+            <td>
+                <input id="vertical-space" type="text" class="input-small layout-text" value= <%= verticalSpacing %> >
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <span class="add-on layout-text"> Horizontal Spacing </span>
+            </td>
+            <td>
+                <input id="horizontal-space" type="text" class="input-small layout-text" value= <%= horizontalSpacing %> >
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <span class="add-on layout-text"> Node Repulsion </span>
+            </td>
+            <td>
+                <input id="node-repulsion4" type="text" class="input-small layout-text" value= <%= nodeRepulsion %> >
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <span class="add-on layout-text"> Node Overlap </span>
+            </td>
+            <td>
+                <input id="node-overlap4" type="text" class="input-small layout-text" value= <%= nodeOverlap %> >
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <span class="add-on layout-text"> Ideal Edge Length </span>
+            </td>
+            <td>
+                <input id="ideal-edge-length4" type="text" class="input-small layout-text" value= <%= idealEdgeLength %> >
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <span class="add-on layout-text"> Edge Elasticity </span>
+            </td>
+            <td>
+                <input id="edge-elasticity4" type="text" class="input-small layout-text" value= <%= edgeElasticity %> >
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <span class="add-on layout-text"> Nesting Factor </span>
+            </td>
+            <td>
+                <input id="nesting-factor4" type="text" class="input-small layout-text" value= <%= nestingFactor %> >
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <span class="add-on layout-text"> Gravity </span>
+            </td>
+            <td>
+                <input id="gravity4" type="text" class="input-small layout-text" value= <%= gravity %> >
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <span class="add-on layout-text"> Number of Iterations </span>
+            </td>
+            <td>
+                <input id="num-iter4" type="text" class="input-small layout-text" value= <%= numIter %> >
+            </td>
+        </tr>
+
+        
+        <tr>
+        <td>
+            <span class="add-on layout-text"> Tile </span>
+        </td>
+        <td>
+            <input id="tile4" type="checkbox" class="input-small layour-text" <% if(tile){%> checked <%} %>>
+        </td>
+    </tr>
+        <tr>
+            <td>
+                <span class="add-on layout-text"> Randomize </span>
+            </td>
+            <td>
+                <input id="incremental4" type="checkbox" class="input-small layour-text" <% if(incremental){%> checked <%} %>>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <span class="add-on layout-text"> Refresh </span>
+            </td>
+            <td>
+                <input id="refresh4" type="text" class="input-small layout-text" value= <%= refresh %> >
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <span class="add-on layout-text"> Fit </span>
+            </td>
+            <td>
+                <input id="fit4" type="checkbox" class="input-small layout-text" <% if(fit){%> checked <%} %>>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <span class="add-on layout-text"> Padding </span>
+            </td>
+            <td>
+                <input id="padding4" type="text" class="input-small layout-text" value= <%= padding %> >
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <span class="add-on layout-text"> Debug </span>
+            </td>
+            <td>
+                <input id="debug4" type="checkbox" class="input-small layout-text" <% if(debug){%> checked <%} %>>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <span class="add-on layout-text"> Initial Temp. </span>
+            </td>
+            <td>
+                <input id="initialTemp4" type="text" class="input-small layout-text" value= <%= initialTemp%>>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <span class="add-on layout-text"> Minimum Temp. </span>
+            </td>
+            <td>
+                <input id="minTemp4" type="text" class="input-small layout-text" value= <%= minTemp%>>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <span class="add-on layout-text"> Cooling Factor </span>
+            </td>
+            <td>
+                <input id="coolingFactor4" type="text" class="input-small layout-text" value= <%= coolingFactor%>>
+            </td>
+        </tr>
+        <tr id="layout-buttons">
+            <td>
+                <button id="save-layout4" class="btn btn-default" >Save</button>
+            </td>
+            <td>
+                <button id="default-layout4" class="btn btn-default">Default</button>
+            </td>
+        </tr>
+    </table>
+</script> -->
+
+        <script type="text/template" id="cose-settings-template">
+    <table class="table-condensed layout-table">
+        <tr>
+            <td>
+                <span class="add-on layout-text"> Node Repulsion </span>
+            </td>
+            <td>
+                <input id="node-repulsion" type="text" class="input-small layout-text" value= <%= nodeRepulsion %> >
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <span class="add-on layout-text"> Node Overlap </span>
+            </td>
+            <td>
+                <input id="node-overlap" type="text" class="input-small layout-text" value= <%= nodeOverlap %> >
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <span class="add-on layout-text"> Ideal Edge Length </span>
+            </td>
+            <td>
+                <input id="ideal-edge-length" type="text" class="input-small layout-text" value= <%= idealEdgeLength %> >
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <span class="add-on layout-text"> Edge Elasticity </span>
+            </td>
+            <td>
+                <input id="edge-elasticity" type="text" class="input-small layout-text" value= <%= edgeElasticity %> >
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <span class="add-on layout-text"> Nesting Factor </span>
+            </td>
+            <td>
+                <input id="nesting-factor" type="text" class="input-small layout-text" value= <%= nestingFactor %> >
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <span class="add-on layout-text"> Gravity </span>
+            </td>
+            <td>
+                <input id="gravity" type="text" class="input-small layout-text" value= <%= gravity %> >
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <span class="add-on layout-text"> Number of Iterations </span>
+            </td>
+            <td>
+                <input id="num-iter" type="text" class="input-small layout-text" value= <%= numIter %> >
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <span class="add-on layout-text"> Refresh </span>
+            </td>
+            <td>
+                <input id="refresh" type="text" class="input-small layout-text" value= <%= refresh %> >
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <span class="add-on layout-text"> Fit </span>
+            </td>
+            <td>
+                <input id="fit" type="checkbox" class="input-small layout-text" <% if(fit){%> checked <%} %>>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <span class="add-on layout-text"> Padding </span>
+            </td>
+            <td>
+                <input id="padding" type="text" class="input-small layout-text" value= <%= padding %> >
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <span class="add-on layout-text"> Randomize </span>
+            </td>
+            <td>
+                <input id="randomize" type="checkbox" class="input-small layout-text" <% if(randomize){%> checked <%} %>>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <span class="add-on layout-text"> Debug </span>
+            </td>
+            <td>
+                <input id="debug" type="checkbox" class="input-small layout-text" <% if(debug){%> checked <%} %>>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <span class="add-on layout-text"> Initial Temp. </span>
+            </td>
+            <td>
+                <input id="initialTemp" type="text" class="input-small layout-text" value= <%= initialTemp%>>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <span class="add-on layout-text"> Minimum Temp. </span>
+            </td>
+            <td>
+                <input id="minTemp" type="text" class="input-small layout-text" value= <%= minTemp%>>
+            </td>
+        </tr>
+        <tr id="layout-buttons">
+            <td>
+                <button id="save-layout" class="btn btn-default" >Save</button>
+            </td>
+            <td>
+                <button id="default-layout" class="btn btn-default">Default</button>
+            </td>
+        </tr>
+    </table>
+</script>
+
+        <script type="text/template" id="cola-settings-template">
+    <table class="table-condensed layout-table">
+        <tr>
+            <td>
+                <span class="add-on layout-text"> Refresh </span>
+            </td>
+            <td>
+                <input id="refresh1" type="text" class="input-small layout-text" value= <%= refresh %> >
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <span class="add-on layout-text"> Max. Simulation Time </span>
+            </td>
+            <td>
+                <input id="maxSimulationTime1" type="text" class="input-small layout-text" value= <%= maxSimulationTime %> >
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <span class="add-on layout-text"> Fit </span>
+            </td>
+            <td>
+                <input id="fit1" type="checkbox" class="input-small layout-text" <% if(fit){%> checked <%} %>>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <span class="add-on layout-text"> Padding </span>
+            </td>
+            <td>
+                <input id="padding1" type="text" class="input-small layout-text" value= <%= padding %> >
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <span class="add-on layout-text"> Randomize </span>
+            </td>
+            <td>
+                <input id="randomize1" type="checkbox" class="input-small layout-text" <% if(randomize){%> checked <%} %>>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <span class="add-on layout-text"> Avoid overlap </span>
+            </td>
+            <td>
+                <input id="avoidOverlap1" type="checkbox" class="input-small layour-text" <% if(avoidOverlap){%> checked <%} %>>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <span class="add-on layout-text"> Handle Disconnected</span>
+            </td>
+            <td>
+                <input id="handleDisconnected1" type="checkbox" class="input-small layout-text" <% if(handleDisconnected){%> checked <%} %>>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <span class="add-on layout-text"> Infinite </span>
+            </td>
+            <td>
+                <input id="infinite1" type="checkbox" class="input-small layout-text" <% if(infinite){%> checked <%} %>>
+            </td>
+        </tr>
+        <tr id="layout-buttons">
+            <td>
+                <button id="save-layout1" class="btn btn-default" >Save</button>
+            </td>
+            <td>
+                <button id="default-layout1" class="btn btn-default">Default</button>
+            </td>
+        </tr>
+    </table>
+</script>
+
+        <script type="text/template" id="arbor-settings-template">
+    <table class="table-condensed layout-table">
+        <tr>
+            <td>
+                <span class="add-on layout-text"> Max. Simulation Time </span>
+            </td>
+            <td>
+                <input id="maxSimulationTime2" type="text" class="input-small layout-text" value= <%= maxSimulationTime %> >
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <span class="add-on layout-text"> Fit </span>
+            </td>
+            <td>
+                <input id="fit2" type="checkbox" class="input-small layout-text" <% if(fit){%> checked <%} %>>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <span class="add-on layout-text"> Padding </span>
+            </td>
+            <td>
+                <input id="padding2" type="text" class="input-small layout-text" value= <%= padding %> >
+            </td>
+        </tr>
+
+
+        <tr>
+            <td>
+                <span class="add-on layout-text"> Gravity </span>
+            </td>
+            <td>
+                <input id="gravity2" type="checkbox" class="input-small layout-text" <% if(gravity){%> checked <%} %>>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <span class="add-on layout-text"> Step Size </span>
+            </td>
+            <td>
+                <input id="stepSize2" type="text" class="input-small layour-text" value=<%=stepSize%>>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <span class="add-on layout-text"> Infinite </span>
+            </td>
+            <td>
+                <input id="infinite2" type="checkbox" class="input-small layout-text" <% if(infinite){%> checked <%} %> >
+            </td>
+        </tr>
+        <tr id="layout-buttons">
+            <td>
+                <button id="save-layout2" class="btn btn-default" >Save</button>
+            </td>
+            <td>
+                <button id="default-layout2" class="btn btn-default">Default</button>
+            </td>
+        </tr>
+    </table>
+</script>
+
+        <script type="text/template" id="springy-settings-template">
+    <table class="table-condensed layout-table">
+        <tr>
+            <td>
+                <span class="add-on layout-text"> Max. Simulation Time </span>
+            </td>
+            <td>
+                <input id="maxSimulationTime3" type="text" class="input-small layout-text" value= <%= maxSimulationTime %> >
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <span class="add-on layout-text"> Fit </span>
+            </td>
+            <td>
+                <input id="fit3" type="checkbox" class="input-small layout-text" <% if(fit){%> checked <%} %>>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <span class="add-on layout-text"> Padding </span>
+            </td>
+            <td>
+                <input id="padding3" type="text" class="input-small layout-text" value= <%= padding %> >
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <span class="add-on layout-text"> Random </span>
+            </td>
+            <td>
+                <input id="random3" type="checkbox" class="input-small layout-text" <% if(random){%> checked <%} %>>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <span class="add-on layout-text"> Infinite </span>
+            </td>
+            <td>
+                <input id="infinite3" type="checkbox" class="input-small layout-text" <% if(infinite){%> checked <%} %>>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <span class="add-on layout-text"> Stiffness </span>
+            </td>
+            <td>
+                <input id="stiffness3" type="checkbox" class="input-small layour-text" <% if(stiffness){%> checked <%} %>>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <span class="add-on layout-text"> Repulsion </span>
+            </td>
+            <td>
+                <input id="repulsion3" type="text" class="input-small layout-text" value= <%= repulsion %> >
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <span class="add-on layout-text"> Damping </span>
+            </td>
+            <td>
+                <input id="damping3" type="text" class="input-small layout-text" value= <%= damping %> >
+            </td>
+        </tr>
+        <tr id="layout-buttons3">
+            <td>
+                <button id="save-layout3" class="btn btn-default" >Save</button>
+            </td>
+            <td>
+                <button id="default-layout3" class="btn btn-default">Default</button>
+            </td>
+        </tr>
+    </table>
+
+</script>
+
+        <!-- newly added -->
+        <script type="text/template" id="fcose-settings-template">
+    <table class="table-condensed layout-table">
+        <tr>
+            <td>
+                <span class="add-on layout-text"> Randomize </span>
+            </td>
+            <td>
+                <input id="randomize5" type="checkbox" class="input-small layout-text" <% if(randomize){ %> checked <%}%> >
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <span class="add-on layout-text"> Fit </span>
+            </td>
+            <td>
+                <input id="fit5" type="checkbox" class="input-small layout-text" <% if(fit){ %> checked <%}%> >
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <span class="add-on layout-text"> Padding </span>
+            </td>
+            <td>
+                <input id="padding5" type="text" class="input-small layout-text" value = <%= padding %> >
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <span class="add-on layout-text"> Node Dimensions Include Labels </span>
+            </td>
+            <td>
+                <input id="nodeDimensionsIncludeLabels5" type="checkbox" class="input-small layout-text" <% if(nodeDimensionsIncludeLabels){ %> checked <%}%> >
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <span class="add-on layout-text"> Sampling Type </span>
+            </td>
+            <td>
+                <input id="samplingType5" type="checkbox" class="input-small layout-text" <% if(samplingType){ %> checked <%}%> >
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <span class="add-on layout-text"> Sample Size </span>
+            </td>
+            <td>
+                <input id="sampleSize5" type="text" class="input-small layout-text" value = <%= sampleSize %> >
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <span class="add-on layout-text"> Node separation </span>
+            </td>
+            <td>
+                <input id="nodeSeparation5" type="text" class="input-small layout-text" value = <%= nodeSeparation %> >
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <span class="add-on layout-text"> Pi Tol </span>
+            </td>
+            <td>
+                <input id="piTol5" type="text" class="input-small layout-text" value = <%= piTol %> >
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <span class="add-on layout-text"> Pi Tol </span>
+            </td>
+            <td>
+                <input id="nodeRepulsion5" type="text" class="input-small layout-text" value = <%= nodeRepulsion %> >
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <span class="add-on layout-text"> Ideal Edge length </span>
+            </td>
+            <td>
+                <input id="idealEdgeLength5" type="text" class="input-small layout-text" value = <%= idealEdgeLength %> >
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <span class="add-on layout-text"> Edge Elasticity </span>
+            </td>
+            <td>
+                <input id="edgeElasticity5" type="text" class="input-small layout-text" value = <%= edgeElasticity %> >
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <span class="add-on layout-text"> Nesting Factor </span>
+            </td>
+            <td>
+                <input id="nestingFactor5" type="text" class="input-small layout-text" value = <%= nestingFactor %> >
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <span class="add-on layout-text"> Gravity </span>
+            </td>
+            <td>
+                <input id="gravity5" type="text" class="input-small layout-text" value = <%= gravity %> >
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <span class="add-on layout-text"> Num Iter </span>
+            </td>
+            <td>
+                <input id="numIter5" type="text" class="input-small layout-text" value = <%= numIter %> >
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <span class="add-on layout-text"> Tile </span>
+            </td>
+            <td>
+                <input id="tile5" type="checkbox" class="input-small layout-text" <% if(tile){ %> checked <%}%> >
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <span class="add-on layout-text"> Tiling Padding Vertical </span>
+            </td>
+            <td>
+                <input id="tilingPaddingVertical5" type="text" class="input-small layout-text" value = <%= tilingPaddingVertical %> >
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <span class="add-on layout-text"> Tiling Padding Horizontal </span>
+            </td>
+            <td>
+                <input id="tilingPaddingHorizontal5" type="text" class="input-small layout-text" value = <%= tilingPaddingHorizontal %> >
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <span class="add-on layout-text"> Gravity Range Compound </span>
+            </td>
+            <td>
+                <input id="gravityRangeCompound5" type="text" class="input-small layout-text" value = <%= gravityRangeCompound %> >
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <span class="add-on layout-text"> Gravity Compound </span>
+            </td>
+            <td>
+                <input id="gravityCompound5" type="text" class="input-small layout-text" value = <%= gravityCompound %> >
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <span class="add-on layout-text"> Gravity Range </span>
+            </td>
+            <td>
+                <input id="gravityRange5" type="text" class="input-small layout-text" value = <%= gravityRange %> >
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <span class="add-on layout-text"> Initial Energy On Incremental </span>
+            </td>
+            <td>
+                <input id="initialEnergyOnIncremental5" type="text" class="input-small layout-text" value = <%= initialEnergyOnIncremental %> >
+            </td>
+        </tr>
+        <tr id="layout-buttons5">
+            <td>
+                <button id="save-layout5" class="btn btn-default" >Save</button>
+            </td>
+            <td>
+                <button id="default-layout5" class="btn btn-default">Default</button>
+            </td>
+        </tr>
+    </table>
+</script>
+
+        <script type="text/template" id="cise-settings-template">
+    <table class="table-condensed layout-table">
+        </tr>
+        <tr>
+            <td>
+                <span class="add-on layout-text"> Refresh </span>
+            </td>
+            <td>
+                <input id="refresh6" type="text" class="input-small layout-text" value = <%= refresh %> >
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <span class="add-on layout-text"> Fit </span>
+            </td>
+            <td>
+                <input id="fit6" type="checkbox" class="input-small layout-text" <% if(fit){ %> checked <%}%> >
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <span class="add-on layout-text"> Padding </span>
+            </td>
+            <td>
+                <input id="padding6" type="text" class="input-small layout-text" value = <%= padding %> >
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <span class="add-on layout-text"> Node Separation </span>
+            </td>
+            <td>
+                <input id="nodeSeparation6" type="text" class="input-small layout-text" value = <%= nodeSeparation %> >
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <span class="add-on layout-text"> Ideal Inter Cluster Edge Length Coefficient  </span>
+            </td>
+            <td>
+                <input id="idealInterClusterEdgeLengthCoefficient6" type="text" class="input-small layout-text" value = <%= idealInterClusterEdgeLengthCoefficient %> >
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <span class="add-on layout-text"> Allow Nodes Inside Circle  </span>
+            </td>
+            <td>
+                <input id="allowNodesInsideCircle6" type="checkbox" class="input-small layout-text" <% if(allowNodesInsideCircle){ %> checked <%}%> >
+            </td>
+        </tr>
+        
+        <tr>
+            <td>
+                <span class="add-on layout-text"> Max Ratio Of Nodes Inside Circle   </span>
+            </td>
+            <td>
+                <input id="maxRatioOfNodesInsideCircle6" type="text" class="input-small layout-text" value = <%= maxRatioOfNodesInsideCircle %> >
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <span class="add-on layout-text"> Spring Coefficient   </span>
+            </td>
+            <td>
+                <input id="springCoeff6" type="text" class="input-small layout-text" value = <%= springCoeff %> >
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <span class="add-on layout-text"> Node Repulsion </span>
+            </td>
+            <td>
+                <input id="nodeRepulsion6" type="text" class="input-small layout-text" value = <%= nodeRepulsion %> >
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <span class="add-on layout-text"> Gravity </span>
+            </td>
+            <td>
+                <input id="gravity6" type="text" class="input-small layout-text" value = <%= gravity %> >
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <span class="add-on layout-text"> Gravity Range </span>
+            </td>
+            <td>
+                <input id="gravityRange6" type="text" class="input-small layout-text" value = <%= gravityRange %> >
+            </td>
+        </tr>
+        <tr id="layout-buttons6">
+            <td>
+                <button id="save-layout6" class="btn btn-default" >Save</button>
+            </td>
+            <td>
+                <button id="default-layout6" class="btn btn-default">Default</button>
+            </td>
+        </tr>
+
+    </table>
+</script>
+
+
+        <script type="text/template" id="avsdf-settings-template">
+    <table class="table-condensed layout-table">
+        <tr>
+            <td>
+                <span class="add-on layout-text"> Refresh </span>
+            </td>
+            <td>
+                <input id="refresh9" type="text" class="input-small layout-text" value = <%= refresh %> >
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <span class="add-on layout-text"> Fit </span>
+            </td>
+            <td>
+                <input id="fit9" type="checkbox" class="input-small layout-text" <% if(fit){ %> checked <%}%> >
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <span class="add-on layout-text"> Padding </span>
+            </td>
+            <td>
+                <input id="padding9" type="text" class="input-small layout-text" value = <%= padding %> >
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <span class="add-on layout-text"> Node Separation </span>
+            </td>
+            <td>
+                <input id="nodeSeparation9" type="text" class="input-small layout-text" value = <%= nodeSeparation %> >
+            </td>
+        </tr>
+ 
+        <tr id="layout-buttons9">
+            <td>
+                <button id="save-layout9" class="btn btn-default" >Save</button>
+            </td>
+            <td>
+                <button id="default-layout9" class="btn btn-default">Default</button>
+            </td>
+        </tr>
+
+
+
+    </table>
+</script>
+
+        <script type="text/template" id="dagre-settings-template">
+    <table class="table-condensed layout-table">
+        <tr>
+            <td>
+                <span class="add-on layout-text"> Fit </span>
+            </td>
+            <td>
+                <input id="fit7" type="checkbox" class="input-small layout-text" <% if(fit){ %> checked <%}%> >
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <span class="add-on layout-text"> Padding </span>
+            </td>
+            <td>
+                <input id="padding7" type="text" class="input-small layout-text" value = <%= padding %> >
+            </td>
+        </tr>
+        
+        <tr>
+            <td>
+                <span class="add-on layout-text"> Node Dimensions Include Labels </span>
+            </td>
+            <td>
+                <input id="nodeDimensionsIncludeLabels7" type="checkbox" class="input-small layout-text" <% if(nodeDimensionsIncludeLabels){ %> checked <%}%> >
+            </td>
+        </tr>
+
+        <tr id="layout-buttons7">
+            <td>
+                <button id="save-layout7" class="btn btn-default" >Save</button>
+            </td>
+            <td>
+                <button id="default-layout7" class="btn btn-default">Default</button>
+            </td>
+        </tr>
+
+    </table>
+</script>
+
+        <script type="text/template" id="klay-settings-template">
+    <table class="table-condensed layout-table">
+        <tr>
+            <td>
+                <span class="add-on layout-text"> Fit </span>
+            </td>
+            <td>
+                <input id="fit8" type="checkbox" class="input-small layout-text" <% if(fit){ %> checked <%}%> >
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <span class="add-on layout-text"> Padding </span>
+            </td>
+            <td>
+                <input id="padding8" type="text" class="input-small layout-text" value = <%= padding %> >
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <span class="add-on layout-text"> Add Unnecessary Bendpoints </span>
+            </td>
+            <td>
+                <input id="addUnnecessaryBendpoints8" type="checkbox" class="input-small layout-text" <% if(klay.addUnnecessaryBendpoints){ %> checked <%}%> >
+            </td>
+        </tr>    
+
+        <tr>
+            <td>
+                <span class="add-on layout-text"> Aspect Ratio </span>
+            </td>
+            <td>
+                <input id="aspectRatio8" type="text" class="input-small layout-text" value = <%= klay.aspectRatio %> >
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <span class="add-on layout-text"> Border Spacing </span>
+            </td>
+            <td>
+                <input id="borderSpacing8" type="text" class="input-small layout-text" value = <%= klay.borderSpacing %> >
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <span class="add-on layout-text"> Compact Components </span>
+            </td>
+            <td>
+                <input id="compactComponents8" type="checkbox" class="input-small layout-text" <% if(klay.compactComponents){ %> checked <%}%> >
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <span class="add-on layout-text"> Edge Spacing Factor </span>
+            </td>
+            <td>
+                <input id="edgeSpacingFactor8" type="text" class="input-small layout-text" value = <%= klay.edgeSpacingFactor %> >
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <span class="add-on layout-text"> Feedback Edges </span>
+            </td>
+            <td>
+                <input id="feedbackEdges8" type="checkbox" class="input-small layout-text" <% if(klay.feedbackEdges){ %> checked <%}%> >
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <span class="add-on layout-text"> In Layer Spacing Factor </span>
+            </td>
+            <td>
+                <input id="inLayerSpacingFactor8" type="text" class="input-small layout-text" value = <%= klay.inLayerSpacingFactor %> >
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <span class="add-on layout-text"> Layout Hierarchy </span>
+            </td>
+            <td>
+                <input id="layoutHierarchy8" type="checkbox" class="input-small layout-text" <% if(klay.layoutHierarchy){ %> checked <%}%> >
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <span class="add-on layout-text"> Linear Segments Deflection Dampening </span>
+            </td>
+            <td>
+                <input id="linearSegmentsDeflectionDampening8" type="text" class="input-small layout-text" value = <%= klay.linearSegmentsDeflectionDampening %> >
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <span class="add-on layout-text"> Merge edges </span>
+            </td>
+            <td>
+                <input id="mergeEdges8" type="checkbox" class="input-small layout-text" <% if(klay.mergeEdges){ %> checked <%}%> >
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <span class="add-on layout-text"> Merge Hierarchy Crossing Edges </span>
+            </td>
+            <td>
+                <input id="mergeHierarchyCrossingEdges8" type="checkbox" class="input-small layout-text" <% if(klay.mergeHierarchyCrossingEdges){ %> checked <%}%> >
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <span class="add-on layout-text"> Randomization Seed </span>
+            </td>
+            <td>
+                <input id="randomizationSeed8" type="text" class="input-small layout-text" value = <%= klay.randomizationSeed %> >
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <span class="add-on layout-text"> Route Self Loop Inside </span>
+            </td>
+            <td>
+                <input id="routeSelfLoopInside8" type="checkbox" class="input-small layout-text" <% if(klay.routeSelfLoopInside8){ %> checked <%}%> >
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <span class="add-on layout-text"> Separate Connected Components </span>
+            </td>
+            <td>
+                <input id="separateConnectedComponents8" type="checkbox" class="input-small layout-text" <% if(klay.separateConnectedComponents){ %> checked <%}%> >
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <span class="add-on layout-text"> Spacing </span>
+            </td>
+            <td>
+                <input id="spacing8" type="text" class="input-small layout-text" value = <%= klay.spacing %> >
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <span class="add-on layout-text"> Thoroughness </span>
+            </td>
+            <td>
+                <input id="thoroughness8" type="text" class="input-small layout-text" value = <%= klay.thoroughness %> >
+            </td>
+        </tr>
+
+        <tr id="layout-buttons8">
+            <td>
+                <button id="save-layout8" class="btn btn-default" >Save</button>
+            </td>
+            <td>
+                <button id="default-layout8" class="btn btn-default">Default</button>
+            </td>
+        </tr>
+
+    </table>
+</script>
+
+        <script type="text/template" id="euler-settings-template">
+    <table class="table-condensed layout-table">
+        <tr>
+            <td>
+                <span class="add-on layout-text"> Fit </span>
+            </td>
+            <td>
+                <input id="fit10" type="checkbox" class="input-small layout-text" <% if(fit){ %> checked <%}%> >
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <span class="add-on layout-text"> Padding </span>
+            </td>
+            <td>
+                <input id="padding10" type="text" class="input-small layout-text" value = <%= padding %> >
+            </td>
+        </tr>
+        
+        <tr>
+            <td>
+                <span class="add-on layout-text"> Gravity </span>
+            </td>
+            <td>
+                <input id="gravity10" type="text" class="input-small layout-text" value = <%= gravity %> >
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <span class="add-on layout-text"> Pull </span>
+            </td>
+            <td>
+                <input id="pull10" type="text" class="input-small layout-text" value = <%= pull %> >
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <span class="add-on layout-text"> Theta </span>
+            </td>
+            <td>
+                <input id="theta10" type="text" class="input-small layout-text" value = <%= theta %> >
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <span class="add-on layout-text"> Drag Coefficient </span>
+            </td>
+            <td>
+                <input id="dragCoeff10" type="text" class="input-small layout-text" value = <%= dragCoeff %> >
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <span class="add-on layout-text"> Movement Threshold </span>
+            </td>
+            <td>
+                <input id="movementThreshold10" type="text" class="input-small layout-text" value = <%= movementThreshold %> >
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <span class="add-on layout-text"> Time Step </span>
+            </td>
+            <td>
+                <input id="timeStep10" type="text" class="input-small layout-text" value = <%= timeStep %> >
+            </td>
+        </tr>
+
+
+        <tr>
+            <td>
+                <span class="add-on layout-text"> Refresh </span>
+            </td>
+            <td>
+                <input id="refresh10" type="text" class="input-small layout-text" value = <%= refresh %> >
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <span class="add-on layout-text"> Max Iterations </span>
+            </td>
+            <td>
+                <input id="maxIterations10" type="text" class="input-small layout-text" value = <%= maxIterations %> >
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <span class="add-on layout-text"> Max Simulation Time </span>
+            </td>
+            <td>
+                <input id="maxSimulationTime10" type="text" class="input-small layout-text" value = <%= maxSimulationTime %> >
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <span class="add-on layout-text"> Randomize </span>
+            </td>
+            <td>
+                <input id="randomize10" type="checkbox" class="input-small layout-text" <% if(randomize){ %> checked <%}%> >
+            </td>
+        </tr>
+
+
+        <tr id="layout-buttons10">
+            <td>
+                <button id="save-layout10" class="btn btn-default" >Save</button>
+            </td>
+            <td>
+                <button id="default-layout10" class="btn btn-default">Default</button>
+            </td>
+        </tr>
+
+    </table>
+</script>
+
+        <script type="text/template" id="spread-settings-template">
+    <table class="table-condensed layout-table">
+        <tr>
+            <td>
+                <span class="add-on layout-text"> Fit </span>
+            </td>
+            <td>
+                <input id="fit11" type="checkbox" class="input-small layout-text" <% if(fit){ %> checked <%}%> >
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <span class="add-on layout-text"> Padding </span>
+            </td>
+            <td>
+                <input id="padding11" type="text" class="input-small layout-text" value = <%= padding %> >
+            </td>
+        </tr>
+        
+        <tr>
+            <td>
+                <span class="add-on layout-text"> Max Expand Iterations </span>
+            </td>
+            <td>
+                <input id="maxExpandIterations11" type="text" class="input-small layout-text" value = <%= maxExpandIterations %> >
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <span class="add-on layout-text"> Randomize </span>
+            </td>
+            <td>
+                <input id="randomize11" type="checkbox" class="input-small layout-text" <% if(randomize){ %> checked <%}%> >
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <span class="add-on layout-text"> Min Distance </span>
+            </td>
+            <td>
+                <input id="minDist11" type="text" class="input-small layout-text" value = <%= minDist %> >
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <span class="add-on layout-text"> Expanding Factor </span>
+            </td>
+            <td>
+                <input id="expandingFactor11" type="text" class="input-small layout-text" value = <%= expandingFactor %> >
+            </td>
+        </tr>
+
+        <tr id="layout-buttons11">
+            <td>
+                <button id="save-layout11" class="btn btn-default" >Save</button>
+            </td>
+            <td>
+                <button id="default-layout11" class="btn btn-default">Default</button>
+            </td>
+        </tr>
+
+    </table>
+</script>
+        <script>
+            let port = 3000;
+        </script>
+
+        <script src="js/view_scripts/jquery.min.js"></script>
+        <script src="https://code.jquery.com/jquery-migrate-3.1.0.js"></script>
+
+        <script src="js/view_scripts/jquery-ui.min.js"></script>
+        <script src="js/view_scripts/bootstrap.min.js"></script>
+        <script src="js/view_scripts/underscore-min.js"></script>
+        <script src="js/view_scripts/backbone-min.js"></script>
+        <script src="js/view_scripts/bootstrap-colorpicker.min.js"></script>
+
+        <!-- For saving the graph purposes -->
+        <script src="js/converter.json-to-graphml.js"></script>
+
+        <!-- CYTOSCAPE & EXTENSIONS -->
+        <script src="js/cytoscape/cytoscape.min.js"></script>
+        <script src="js/cytoscape/extensions/ui/cytoscape-panzoom.js"></script>
+        <script src="js/cytoscape/extensions/ui/cytoscape-undo-redo.js"></script>
+
+        <!-- CUSTOMS FOR DEMO -->
+        <script src="js/utils.add-remove.js"></script>
+        <script src="js/Layouts.js"></script>
+        <script src="js/EditorActionsManager.js"></script>
+        <script src="js/IDGenerator.js"></script>
+        <script src="js/FileSaver.js"></script>
+        <script src="js/main.menu.js"></script>
+</body>
+
+</html>
