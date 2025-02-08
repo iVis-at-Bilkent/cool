@@ -3,7 +3,7 @@ const app = express();
 const cytoscape = require('cytoscape');
 const cors = require('cors');
 
-const port = 3000;
+const port = 4400;
 
 // to serve the html
 const path = require("path");
