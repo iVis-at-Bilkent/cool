@@ -427,7 +427,7 @@ $("body").on("change", "#file-input", function (e) {
             else if (isSBGNML)
                 url = "https://cytoscape-ivis-layout-service.herokuapp.com/layout/sbgnml?edges=true"
             else
-                url = "https://cytoscape-ivis-layout-service.herokuapp.com/layout/json?edges=true"
+                url = "https://ivis.cs.bilkent.edu.tr:5400/presetLayout/json?edges=true"
         }
 
         var options = { name: "preset" };
@@ -579,7 +579,7 @@ var loadSample = function (fileName) {
         else if (isSBGNML)
             url = "https://cytoscape-ivis-layout-service.herokuapp.com/layout/sbgnml?edges=true"
         else
-            url = "https://cytoscape-ivis-layout-service.herokuapp.com/layout/json?edges=true"
+            url = "https://ivis.cs.bilkent.edu.tr:5400/presetLayout/json?edges=true"
     }
 
     var options = { name: "preset" };
@@ -678,7 +678,7 @@ $("#perform-layout").click(function (e){
         else if (isSBGNML)
             url = "https://cytoscape-ivis-layout-service.herokuapp.com/layout/sbgnml?edges=true"
         else
-            url = "https://cytoscape-ivis-layout-service.herokuapp.com/layout/json?edges=true"
+            url = "https://ivis.cs.bilkent.edu.tr:5400/layout/json?edges=true"
     }
 
     var options = { name: "preset" };
