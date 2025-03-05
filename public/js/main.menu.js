@@ -1,5 +1,7 @@
 heroku = !(location.hostname === "localhost");
 
+let currentFile;
+
 var refreshUndoRedoButtonsStatus = function () {
 
     if (ur.isUndoStackEmpty()) {
@@ -358,6 +360,7 @@ $("#layout-properties").click(function (e) {
 
 $("#perform-layout").click(function (e) {
     // cy.layout().stop();
+    return ;
 
     cy.nodes().removeData("ports");
     cy.edges().removeData("portsource");
@@ -416,7 +419,7 @@ $("body").on("change", "#file-input", function (e) {
             else if (isSBGNML)
                 url = "http://localhost:" + port + "/layout/sbgnml?edges=true"
             else
-                url = "http://localhost:" + 5400 + "/layout/json?edges=true"
+                url = "http://localhost:" + 5400 + "/presetlayout/json?edges=true"
         }
         else {
             if (isGraphML)
@@ -544,12 +547,112 @@ $("#save-as-png").click(function (evt) {
 });
 var loadSample = function (fileName) {
     console.log( "Uploaded file " + fileName);
+    currentFile = fileName;
     let convertIt;
     function readFile() {
         $.ajaxSetup({
             async: false
         });
         jQuery.get("samples/" + fileName + ".txt", (txt) => {
+            convertIt = txt;
+        });
+        $.ajaxSetup({
+            async: true
+        })
+    }
+    readFile();
+
+    let isGraphML = (convertIt.search("graphml") === -1) ? 0 : 1;
+    let isSBGNML = (convertIt.search("sbgn") === -1) ? 0 : 1;
+
+    if (!heroku) {
+        if (isGraphML)
+            url = "http://localhost:" + port + "/layout/graphml?edges=true";
+        else if (isSBGNML)
+            url = "http://localhost:" + port + "/layout/sbgnml?edges=true"
+        else
+            url = "http://localhost:" + 5400 + "/presetlayout/json?edges=true"
+    }
+    else {
+        if (isGraphML)
+            url = "https://cytoscape-ivis-layout-service.herokuapp.com/layout/graphml?edges=true";
+        else if (isSBGNML)
+            url = "https://cytoscape-ivis-layout-service.herokuapp.com/layout/sbgnml?edges=true"
+        else
+            url = "https://cytoscape-ivis-layout-service.herokuapp.com/layout/json?edges=true"
+    }
+
+    var options = { name: "preset" };
+    let graphData = convertIt;
+
+    let data;
+    if (!isGraphML && !isSBGNML) {
+        data = [JSON.parse(graphData), options];
+        data = JSON.stringify(data);
+    }
+    else
+        data = graphData + JSON.stringify(options);
+
+    const settings = {
+        method: 'POST',
+        headers: {
+            Accept: 'application/json',
+            'content-Type': 'text/plain',
+        },
+        body: data
+    };
+
+    fetch(url, settings)
+        .then(response => response.json())
+        .then(res => {
+            let els = [];
+            let addIt;
+            els['nodes'] = [];
+            els['edges'] = [];
+
+            Object.keys(res).forEach((obj) => {
+                if (res[obj].source && res[obj].target) {
+                    addIt = {
+                        data: {
+                            id: obj,
+                            source: res[obj].source,
+                            target: res[obj].target
+                        }
+                    }
+                    els['edges'].push(addIt);
+                }
+                else {
+                    addIt = {
+                        data: {
+                            id: obj,
+                            clusterID: res[obj].data.clusterID,
+                            width: res[obj].data.width,
+                            height: res[obj].data.height,
+                            parent: res[obj].data.parent
+                        },
+                        position: { x: res[obj].position.x , y: res[obj].position.y }
+                    }
+                    els['nodes'].push(addIt);
+                }
+            });
+            cytoscapeJsGraph = els;
+            refreshCytoscape(els);
+            setFileContent(fileName);
+        })
+        .catch(e => {
+            return e
+        });
+};
+
+$("#perform-layout").click(function (e){
+    console.log( "perform layout");
+    console.log( "Uploaded file " + currentFile);
+    let convertIt;
+    function readFile() {
+        $.ajaxSetup({
+            async: false
+        });
+        jQuery.get("samples/" + currentFile + ".txt", (txt) => {
             convertIt = txt;
         });
         $.ajaxSetup({
@@ -626,7 +729,7 @@ var loadSample = function (fileName) {
                             height: res[obj].data.height,
                             parent: res[obj].data.parent
                         },
-                        position: { x: res[obj].position.x * verticalSpacing, y: res[obj].position.y * horizontalSpacing }
+                        position: { x: res[obj].position.x * verticalSpacing, y: res[obj].position.y * horizontalSpacing}
                     }
                     els['nodes'].push(addIt);
                 }
@@ -638,7 +741,9 @@ var loadSample = function (fileName) {
         .catch(e => {
             return e
         });
-};
+
+
+});
 
 $("#sample0").click(function (e) {
     console.log( "First sample");
